@@ -22,5 +22,5 @@ Feature: Geocode user address and ip address
     #Scenario: Compair locations
 
     Scenario: Finish process
-        When finish process for address
+        When finish process for addresses
 

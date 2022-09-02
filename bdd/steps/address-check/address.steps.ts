@@ -4,9 +4,10 @@ import {
 } from '@cloudeou/telus-bdd';
 import { Identificators } from '../../contexts/Identificators';
 import { IpApiClient } from '../../../bdd-src/address-check/ip-api/ip-api.api';
+import { MapBoxClient } from '../../../bdd-src/address-check/mapbox-api/mapbox-api.api';
 import ErrorContext from '../../contexts/address-check/ErrorContext';
 import AddressContext from '../../contexts/address-check/AddressContext';
-import { wirteCoordinatedToDbQuery } from '../../../bdd-src/db/db-queries';
+import { wirteCoordinatedToDbQuery } from '../../../bdd-src/address-check/db/db-queries';
 
 type step = (
     stepMatcher: string | RegExp,
@@ -21,6 +22,7 @@ export const addressSteps = ({given, when, and, then}: {[key: string]: step}) =>
         featureContext().getContextById(Identificators.AddressContext);
 
     const ipApiClient = new IpApiClient();
+    const mapBoxClient = new MapBoxClient();
 
     given(/^address (.*) is (.*)$/, (paramName: string, paramValue: any) => {
         console.log(`Setting ${paramName} to ${paramValue}`);
@@ -36,6 +38,17 @@ export const addressSteps = ({given, when, and, then}: {[key: string]: step}) =>
         try {
             const ipAddress: string = addressContext().ipAddress;
             const {lat, lon} = await ipApiClient.getIpGeocode(ipAddress);
+            addressContext().lat = lat;
+            addressContext().lon = lon;
+        } catch (error) {
+            errorContext().error = <string>error;
+        }
+    })
+
+    when('geocode address text', async () => {
+        try {
+            const addressText: string = addressContext().textAddress;
+            const {lat, lon} = await mapBoxClient.getAddressGeocode(addressText);
             addressContext().lat = lat;
             addressContext().lon = lon;
         } catch (error) {

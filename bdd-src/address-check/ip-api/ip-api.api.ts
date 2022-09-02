@@ -11,8 +11,8 @@ export class IpApiClient {
                 method: "GET",
                 url: `${envConfig.mapBox.baseUrl}/${ipAddress}`
             });
-            const coordinates = {lat: response.lat, lon: response.lon};
-            console.log(`Got coordinated: ${coordinates.lat}, ${coordinates.lon}`);
+            const coordinates = {lat: response.data.lat, lon: response.data.lon};
+            console.log(`Got coordinates: ${coordinates.lat}:${coordinates.lon}`);
             return coordinates
         } catch (error) {
             const errorText = `Error while geocoding ip address: ${ipAddress} \n ${JSON.stringify(error)}`
