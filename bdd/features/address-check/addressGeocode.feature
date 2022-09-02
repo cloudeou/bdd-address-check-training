@@ -11,6 +11,7 @@ Feature: Geocode user address and ip address
         And address table is addresses
         When geocode ip address
         Then write location to db lat ip_lat lon ip_lon
+        And reset coordinates
 
     Scenario: Geoode text address
         Given address text is @address_text

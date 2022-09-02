@@ -1,2 +1,7 @@
-// import your steps here and export all of them as array of steps.
-export default [];
+import { addressSteps } from '../steps/address-check/address.steps';
+import { commonSteps } from '../steps/address-check/common.steps';
+
+export default [
+    addressSteps,
+    commonSteps
+];

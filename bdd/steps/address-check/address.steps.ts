@@ -73,4 +73,9 @@ export const addressSteps = ({given, when, and, then}: {[key: string]: step}) =>
             errorContext().error = errorText;
         }
     })
+
+    then('reset coordinates', () => {
+        addressContext().lat = NaN;
+        addressContext().lon = NaN;
+    })
 } 

@@ -13,7 +13,7 @@ type step = (
   ) => void;
   
 
-export const addressSteps = ({given, when, and, then}: {[key: string]: step}) => {
+export const commonSteps = ({given, when, and, then}: {[key: string]: step}) => {
     const errorContext = (): ErrorContext => 
         featureContext().getContextById(Identificators.ErrorContext);
     const addressContext = (): AddressContext => 
